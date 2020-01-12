@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>losowanie_pytan</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .input-group {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Dodaj pytanie do listy"
+                    aria-label="Dodaj pytanie do listy" aria-describedby="button-addon4">
+                <div class="input-group-append" id="button-addon4">
+                    <button class="add btn btn-outline-secondary" type="button">Dodaj</button>
+                    <button class="clean btn btn-outline-secondary" type="button">Resetuj</button>
+                </div>
+            </div>
+        </form>
+
+
+
+
+        <button class="showAdvice btn btn-primary">Losuj pytanie</button>
+        <button class="showOptions btn btn-primary">Pokaż pytania</button>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+    <script>
+        const possiblities = [];
+        const btnAdd = document.querySelector(".add");
+        const btnReset = document.querySelector(".clean");
+        const btnQuestion = document.querySelector(".showAdvice");
+        const btnOptions = document.querySelector(".showOptions");
+        const input = document.querySelector("input");
+
+        const addedElement = (e) => {
+            e.preventDefault();
+            possiblities.push(input.value);
+            input.value = "";
+            console.log(possiblities);
+
+        }
+
+
+        btnAdd.addEventListener("click", addedElement);
+
+        const clearTable = (e) => {
+            e.preventDefault();
+            for (let i = 0; possiblities.length; i++) {
+                possiblities.pop()
+
+
+            }
+
+
+            document.querySelector("ul").textContent = "";
+        };
+        btnReset.addEventListener("click", clearTable);
+
+
+
+        const randomQuestion = () => {
+            if (possiblities.length > 0) {
+                const Question = possiblities[Math.floor(Math.random() * possiblities.length)];
+
+
+                document.querySelector("ul").textContent = "";
+                const liElement = document.createElement("li");
+                liElement.classList.add('list-group-item')
+                liElement.textContent = Question;
+                document.querySelector("ul").appendChild(liElement);
+            } else {
+                window.alert("wprowadź pytania")
+            }
+
+
+
+        }
+        btnQuestion.addEventListener("click", randomQuestion);
+
+        const showPosibilities = () => {
+
+
+            if (possiblities.length > 0) {
+                document.querySelector("ul").textContent = "";
+                for (let i = 0; i < possiblities.length; i++) {
+                    const liElement = document.createElement("li");
+                    liElement.classList.add('list-group-item')
+                    liElement.textContent = possiblities[i];
+                    document.querySelector("ul").appendChild(liElement);
+                }
+            } else {
+                window.alert("wprowadź pytania")
+            }
+
+        }
+        btnOptions.addEventListener("click", showPosibilities);
+    </script>
+</body>
+
+</html>
